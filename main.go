@@ -5,15 +5,14 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"net/http/httputil"
 	"os"
 	"regexp"
 
 	"github.com/sysgoblin/log4shell-honeypot/extractor"
 )
 
-func Analyse(text string, remote string) {
-	log.Printf("Testing: %s\n", text)
-
+func Analyse(text string, request *http.Request) {
 	pattern := regexp.MustCompile(`\${jndi:(.*)}`)
 	finder := extractor.NewFinder(pattern)
 
@@ -28,25 +27,29 @@ func Analyse(text string, remote string) {
 		}
 
 		for _, filename := range files {
-			log.Printf("Saved payload from %s to file %s\n", remote, filename)
+			log.Printf("Saved payload from %s to file %s\n", request.RemoteAddr, filename)
+
+			// log rull request
+			reqDump, err := httputil.DumpRequest(request, true)
+			if err != nil {
+				log.Printf("Failed to dump request: %v", err)
+				continue
+			} else {
+				log.Printf("Request: %s", reqDump)
+			}
 		}
 	}
 }
 
 func handler(w http.ResponseWriter, req *http.Request) {
-	// get the ua/ref strings from the request
-	useragent := req.Header.Get("User-Agent")
-	referer := req.Header.Get("Referer")
-	url := req.URL.String()
+	// get all headers from the request
+	headers := req.Header
 
-	// log details of the request
-	log.Printf("Request from %s: %s, %s, %s", req.RemoteAddr, url, useragent, referer)
-
-	// send ua to Analyse
-	Analyse(useragent, req.RemoteAddr)
-	// send referer if it exists
-	if referer != "" {
-		Analyse(referer, req.RemoteAddr)
+	// send all headers to Analyse
+	for _, value := range headers {
+		for _, v := range value {
+			Analyse(v, req)
+		}
 	}
 
 	fmt.Fprintf(w, "thanks lol\n")

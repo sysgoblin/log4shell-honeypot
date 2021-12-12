@@ -20,6 +20,7 @@ import (
 func DownloadPayload(entry *ldap.Entry) (string, error) {
 	addr, err := url.Parse(entry.GetAttributeValue("javaCodeBase"))
 	if err != nil {
+		log.Printf("Failed to parse URL: %s", err)
 		return "", err
 	}
 
@@ -29,6 +30,7 @@ func DownloadPayload(entry *ldap.Entry) (string, error) {
 
 	filename, err := DownloadFile(addr)
 	if err != nil {
+		log.Printf("Failed to download payload: %v\n", err)
 		return "", err
 	}
 

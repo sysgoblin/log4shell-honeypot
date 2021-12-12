@@ -2,6 +2,7 @@
 package extractor
 
 import (
+	"log"
 	"net/url"
 	"regexp"
 )
@@ -25,6 +26,7 @@ func (f *Finder) FindInjections(text string) []*url.URL {
 		}
 
 		urls = append(urls, address)
+		log.Printf("Found injection: %s", address)
 	}
 
 	return urls
