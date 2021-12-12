@@ -43,12 +43,14 @@ func FetchFromLdap(address *url.URL) ([]string, error) {
 
 	l, err := ldap.DialURL(dialUrl.String())
 	if err != nil {
+		log.Printf("Failed to connect to LDAP server: %s", err)
 		return nil, err
 	}
 	defer l.Close()
 
 	err = l.UnauthenticatedBind("")
 	if err != nil {
+		log.Printf("Failed unauth bind to LDAP server: %s", err)
 		return nil, err
 	}
 
@@ -64,6 +66,7 @@ func FetchFromLdap(address *url.URL) ([]string, error) {
 
 	sr, err := l.Search(searchRequest)
 	if err != nil {
+		log.Printf("Failed to search LDAP server: %s", err)
 		return nil, err
 	}
 
