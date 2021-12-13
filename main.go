@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"log"
 	"net/http"
 	"net/http/httputil"
@@ -52,7 +51,7 @@ func handler(w http.ResponseWriter, req *http.Request) {
 		}
 	}
 
-	fmt.Fprintf(w, "thanks lol\n")
+	w.WriteHeader(http.StatusOK)
 }
 
 func main() {
