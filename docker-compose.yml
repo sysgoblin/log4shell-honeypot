@@ -1,0 +1,52 @@
+version: "3"
+
+services:
+  http:
+    build: 
+      dockerfile: Dockerfile
+      context: .
+    ports:
+      - "80:80"
+    working_dir: "/app"
+    command: ./l4sh -h :80
+    restart: always
+    volumes:
+      - ./payloads:/app/payloads
+
+  http_proxy:
+    build: 
+      dockerfile: Dockerfile
+      context: .
+    ports:
+      - "8080:8080"
+    working_dir: "/app"
+    command: ./l4sh -h :8080
+    restart: always
+    volumes:
+      - ./payloads:/app/payloads
+    
+  https:
+    build: 
+      dockerfile: Dockerfile
+      context: .
+    ports:
+      - "443:443"
+    working_dir: "/app"
+    command: ./l4sh -h :443
+    restart: always
+    volumes:
+      - ./payloads:/app/payloads
+
+  elastic:
+    build: 
+      dockerfile: Dockerfile
+      context: .
+    ports:
+      - "9200:9200"
+    working_dir: "/app"
+    command: ./l4sh -h :9200
+    restart: always
+    volumes:
+      - ./payloads:/app/payloads
+
+

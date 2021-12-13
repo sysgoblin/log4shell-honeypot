@@ -5,7 +5,6 @@ import (
 	"log"
 	"net/http"
 	"net/http/httputil"
-	"os"
 	"regexp"
 
 	"github.com/sysgoblin/log4shell-honeypot/extractor"
@@ -57,13 +56,6 @@ func handler(w http.ResponseWriter, req *http.Request) {
 func main() {
 	address := flag.String("h", ":8080", "HTTP server binding address")
 	flag.Parse()
-
-	f, err := os.OpenFile("http.log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
-	if err != nil {
-		log.Fatalf("error opening file: %v", err)
-	}
-	defer f.Close()
-	log.SetOutput(f)
 
 	http.HandleFunc("/", handler)
 	http.ListenAndServe(*address, nil)

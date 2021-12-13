@@ -1,4 +1,4 @@
-// https://github.com/sysgoblin/minecraft-log4j-honeypot/tree/master/extractor
+// https://github.com/Adikso/minecraft-log4j-honeypot/tree/master/extractor
 package extractor
 
 import (
