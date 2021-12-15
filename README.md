@@ -1,5 +1,5 @@
 # log4shell-honeypot
-Catch and download `log4shell` payloads sent within HTTP headers. Modified version of [Adikso's minecraft honeypot](https://github.com/Adikso/minecraft-log4j-honeypot)
+Catch and download `log4shell` payloads sent within HTTP headers, query parameters or POST data. Modified version of [Adikso's minecraft honeypot](https://github.com/Adikso/minecraft-log4j-honeypot)
 
 ## Setup
 1. `git clone $repo`
