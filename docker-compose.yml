@@ -8,7 +8,7 @@ services:
     ports:
       - "80:80"
     working_dir: "/app"
-    command: ./l4sh -h :80
+    command: ./l4sh -h :80 -s apache
     restart: always
     volumes:
       - ./payloads:/app/payloads
@@ -20,7 +20,7 @@ services:
     ports:
       - "8080:8080"
     working_dir: "/app"
-    command: ./l4sh -h :8080
+    command: ./l4sh -h :8080 -s apache
     restart: always
     volumes:
       - ./payloads:/app/payloads
@@ -32,7 +32,7 @@ services:
     ports:
       - "443:443"
     working_dir: "/app"
-    command: ./l4sh -h :443
+    command: ./l4sh -h :443 -s apache
     restart: always
     volumes:
       - ./payloads:/app/payloads
@@ -44,7 +44,7 @@ services:
     ports:
       - "9200:9200"
     working_dir: "/app"
-    command: ./l4sh -h :9200
+    command: ./l4sh -h :9200 -s elastic
     restart: always
     volumes:
       - ./payloads:/app/payloads
