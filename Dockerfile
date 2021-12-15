@@ -3,6 +3,7 @@ FROM golang:alpine
 WORKDIR /app
 
 COPY extractor extractor
+COPY responses responses
 COPY go.mod .
 COPY go.sum .
 COPY main.go .
